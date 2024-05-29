@@ -36,7 +36,7 @@ class _ChooseTabState extends State<ChooseTab> {
               builder = (BuildContext context) => const Explore();
               break;
             case '/goals':
-              builder = (BuildContext context) => const Goals();
+              builder = (BuildContext context) => Goals();
               break;
             case '/profile':
               builder = (BuildContext context) => const Profile();

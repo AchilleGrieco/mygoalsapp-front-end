@@ -55,8 +55,7 @@ class _ExploreState extends State<Explore> {
                   return Column(
                     children: List.generate(state.length, (index) {
                       return GoalCard(
-                        name: state[index].name,
-                        icon: state[index].icon,
+                        goal: state[index],
                       );
                     }),
                   );

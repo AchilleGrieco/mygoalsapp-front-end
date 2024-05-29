@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_goals/cubit/goals_cubit.dart';
+import 'package:my_goals/model/goal.dart';
 
 class GoalCard extends StatelessWidget {
-  const GoalCard({super.key, required this.name, required this.icon});
+  const GoalCard({super.key, required this.goal});
 
-  final String name;
-  final Icon icon;
+
+  final Goal goal;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +35,18 @@ class GoalCard extends StatelessWidget {
           const Expanded(child: SizedBox()),
           IconButton(
             icon: const Icon(Icons.mode),
-            onPressed: () {},
+            onPressed: () {
+              context.read<GoalsCubit>().modifyGoal(goal);
+            },
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
             visualDensity: const VisualDensity(horizontal: -3),
           ),
           IconButton(
             icon: const Icon(Icons.delete),
-            onPressed: () {},
+            onPressed: () {
+              context.read<GoalsCubit>().removeGoal(goal);
+            },
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
             visualDensity: const VisualDensity(horizontal: -3),

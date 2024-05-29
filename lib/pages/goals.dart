@@ -1,22 +1,10 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:my_goals/config.dart';
 import 'package:my_goals/pages/choosed_goal_card.dart';
-import 'package:http/http.dart' as http;
 
 class Goals extends StatelessWidget {
-  Goals({super.key});
+  const Goals({super.key});
 
-  List<Goals> goals = [];
-
-
-  void loadGoals() async {
-    Uri url = Uri.http(Config.apiUrl, "/getGoals");
-    final response = await http.get(url);
-    final data = jsonDecode(response.body);
-    
-  }
 
   @override
   Widget build(BuildContext context) {
