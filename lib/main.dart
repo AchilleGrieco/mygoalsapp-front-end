@@ -7,15 +7,16 @@ import 'package:my_goals/pages/log_in.dart';
 import 'package:my_goals/pages/sign_up.dart';
 import 'package:my_goals/service/goal_service.dart';
 
-void main() {
+void main() async {
+  List<Goal> goals = await GoalService().getGoals();
   runApp(BlocProvider(
-    create: (context) => GoalsCubit(GoalService().getGoals() as List<Goal>),
+    create: (context) => GoalsCubit(goals),
     child: MaterialApp(
       initialRoute: '/login',
       routes: {
         '/signup': (context) => const SignUp(),
         '/login': (context) => const LogIn(),
-        '/choosetab': (context) => const ChooseTab()  
+        '/choosetab': (context) => const ChooseTab()
       },
     ),
   ));

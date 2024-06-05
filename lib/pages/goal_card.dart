@@ -6,7 +6,6 @@ import 'package:my_goals/model/goal.dart';
 class GoalCard extends StatelessWidget {
   const GoalCard({super.key, required this.goal});
 
-
   final Goal goal;
 
   @override
@@ -27,14 +26,14 @@ class GoalCard extends StatelessWidget {
           const SizedBox(
             width: 30,
           ),
-          const Text(
-            "Running",
-            style: TextStyle(fontSize: 24),
+          Text(
+            goal.name,
+            style: const TextStyle(fontSize: 24),
           ),
           //expanded
           const Expanded(child: SizedBox()),
           IconButton(
-            icon: const Icon(Icons.mode),
+            icon: goal.icon,
             onPressed: () {
               context.read<GoalsCubit>().modifyGoal(goal);
             },
