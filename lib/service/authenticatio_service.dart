@@ -15,7 +15,7 @@ class AuthenticatioService {
     }
   }
 
-  void login(String username, String password) async {
+  Future<String> login(String username, String password) async {
     Uri url = Uri.http(Config.apiUrl, "/login");
     final body = {"username": username, "password": password};
     final header = {"Content-Type": "application/json"};
@@ -25,6 +25,7 @@ class AuthenticatioService {
       throw Exception();
     }
     final data = jsonDecode(response.body);
-    String jwtToken = data[];
+    String jwtToken = data["accesstoken"];
+    return jwtToken;
   }
 }
