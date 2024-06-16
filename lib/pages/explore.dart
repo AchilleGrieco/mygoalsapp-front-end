@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_goals/cubit/goals_cubit.dart';
-import 'package:my_goals/model/goal.dart';
-import 'package:my_goals/pages/goal_card.dart';
+import 'package:my_goals/cubit/goal_templates_cubit.dart';
+import 'package:my_goals/model/goal_template.dart';
+import 'package:my_goals/pages/goal_template_card.dart';
 
 class Explore extends StatefulWidget {
   const Explore({super.key});
@@ -50,12 +50,12 @@ class _ExploreState extends State<Explore> {
                   )
                 ],
               ),
-              BlocBuilder<GoalsCubit, List<Goal>>(
+              BlocBuilder<GoalTemplatesCubit, List<GoalTemplate>>(
                 builder: (context, state) {
                   return Column(
                     children: List.generate(state.length, (index) {
-                      return GoalCard(
-                        goal: state[index],
+                      return GoalTemplateCard(
+                        goalTemplate: state[index],
                       );
                     }),
                   );
