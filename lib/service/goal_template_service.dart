@@ -21,7 +21,9 @@ class GoalTemplateService {
   void addGoalTemplate(GoalTemplate goalTemplate) async {
     Uri url = Uri.http(Config.apiUrl, "/addGoal");
     final body = {"name": goalTemplate.name, "icon": goalTemplate.icon};
-    final header = {"Content-Type": "application/json"};
+    final header = {
+      "Content-Type": "application/json"
+    }; // aggiungere authentication header con token
     var response =
         await http.post(url, headers: header, body: jsonEncode(body));
     if (response.statusCode != 200) {
@@ -42,7 +44,11 @@ class GoalTemplateService {
 
   void modifyGoalTemplate(GoalTemplate goalTemplate) async {
     Uri url = Uri.http(Config.apiUrl, "/modifyGoal");
-    final body = {"goalId": goalTemplate.goalId, "name": goalTemplate.name, "icon": goalTemplate.icon};
+    final body = {
+      "goalId": goalTemplate.goalId,
+      "name": goalTemplate.name,
+      "icon": goalTemplate.icon
+    };
     final header = {"Content-Type": "application/json"};
     var response = await http.put(url, headers: header, body: jsonEncode(body));
     if (response.statusCode != 200) {

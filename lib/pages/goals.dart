@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_goals/pages/choosed_goal_card.dart';
+import 'package:my_goals/pages/goal_card.dart';
 
 class Goals extends StatelessWidget {
   const Goals({super.key});
@@ -35,11 +35,11 @@ class Goals extends StatelessWidget {
                 child: Row(
                   children: [
                     Column(
-                      children: [ChoosedGoalCard()],
+                      children: [GoalCard()],
                     ),
                     Expanded(child: SizedBox()),
                     Column(
-                      children: [ChoosedGoalCard()],
+                      children: [GoalCard()],
                     ),
                   ],
                 ),
@@ -47,7 +47,7 @@ class Goals extends StatelessWidget {
             ],
           ),
         ),
-        // elenco di choosedGoalCards
+        // elenco di goalCards
       )
     ]);
   }

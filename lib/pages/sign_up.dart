@@ -1,7 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:my_goals/service/authentication_service.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController repeatPasswordController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
+    repeatPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +62,18 @@ class SignUp extends StatelessWidget {
                   ),
                   Text(
                     "goals",
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ],
               ),
               const SizedBox(
                 height: 40,
               ),
-              const TextField(
+              TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -61,7 +86,22 @@ class SignUp extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const TextField(
+              TextField(
+                controller: usernameController,
+                decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white)),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white)),
+                    labelText: 'Username',
+                    labelStyle: TextStyle(color: Colors.white)),
+                style: TextStyle(color: Colors.white),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                controller: passwordController,
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -69,12 +109,13 @@ class SignUp extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.white)),
                     labelText: 'Password',
                     labelStyle: TextStyle(color: Colors.white)),
-                    style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white),
               ),
               const SizedBox(
                 height: 10,
               ),
-              const TextField(
+              TextField(
+                controller: repeatPasswordController,
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -82,7 +123,7 @@ class SignUp extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.white)),
                     labelText: 'Repeat password',
                     labelStyle: TextStyle(color: Colors.white)),
-                    style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white),
               ),
               const SizedBox(
                 height: 70,
@@ -96,7 +137,11 @@ class SignUp extends StatelessWidget {
                     gradient: const LinearGradient(
                         colors: [Colors.blueAccent, Colors.greenAccent])),
                 child: ElevatedButton(
-                  onPressed: null,
+                  onPressed: () {
+                    AuthenticationService().register(emailController.text,
+                        usernameController.text, passwordController.text);
+                    Navigator.pushNamed(context, '/login');
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent),
@@ -109,20 +154,25 @@ class SignUp extends StatelessWidget {
               const SizedBox(
                 height: 90,
               ),
-              const Text('Already have an account?', style: TextStyle(
-                color: Colors.white
-              ),),
-              TextButton(onPressed: () {
-                Navigator.pop(context);
-              }, style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ), 
-              child: const Text('Log in', style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
-              ))
+              const Text(
+                'Already have an account?',
+                style: TextStyle(color: Colors.white),
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text(
+                    'Log in',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ))
             ],
           ),
         ),

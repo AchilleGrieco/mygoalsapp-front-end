@@ -13,15 +13,13 @@ class ChooseTab extends StatefulWidget {
 }
 
 class _ChooseTabState extends State<ChooseTab> {
-
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Navigator(
-    key: navigatorKey,
+        key: navigatorKey,
         initialRoute: '/home',
         onGenerateInitialRoutes: (navigator, initialRoute) {
           return [MaterialPageRoute(builder: (context) => const Home())];
@@ -36,7 +34,7 @@ class _ChooseTabState extends State<ChooseTab> {
               builder = (BuildContext context) => const Explore();
               break;
             case '/goals':
-              builder = (BuildContext context) => Goals();
+              builder = (BuildContext context) => const Goals();
               break;
             case '/profile':
               builder = (BuildContext context) => const Profile();
@@ -47,7 +45,9 @@ class _ChooseTabState extends State<ChooseTab> {
           return MaterialPageRoute(builder: builder, settings: settings);
         },
       ),
-      bottomNavigationBar: GNavBar(navigatorKey: navigatorKey,),
+      bottomNavigationBar: GNavBar(
+        navigatorKey: navigatorKey,
+      ),
     );
   }
 }

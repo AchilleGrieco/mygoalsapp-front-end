@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:my_goals/service/authentication_service.dart';
 
-class LogIn extends StatelessWidget {
+class LogIn extends StatefulWidget {
   const LogIn({super.key});
+
+  @override
+  State<LogIn> createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,27 +57,32 @@ class LogIn extends StatelessWidget {
                   ),
                   Text(
                     "goals",
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ],
               ),
               const SizedBox(
                 height: 40,
               ),
-              const TextField(
+              TextField(
+                controller: usernameController,
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
-                    labelText: 'Email',
+                    labelText: 'Username',
                     labelStyle: TextStyle(color: Colors.white)),
                 style: TextStyle(color: Colors.white),
               ),
               const SizedBox(
                 height: 10,
               ),
-              const TextField(
+              TextField(
+                controller: passwordController,
                 decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -69,7 +90,7 @@ class LogIn extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.white)),
                     labelText: 'Password',
                     labelStyle: TextStyle(color: Colors.white)),
-                    style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white),
               ),
               const SizedBox(
                 height: 90,
@@ -84,6 +105,8 @@ class LogIn extends StatelessWidget {
                         colors: [Colors.blueAccent, Colors.greenAccent])),
                 child: ElevatedButton(
                   onPressed: () {
+                    AuthenticationService().login(
+                        usernameController.text, passwordController.text);
                     Navigator.pushNamed(context, '/choosetab');
                   },
                   style: ElevatedButton.styleFrom(
@@ -98,20 +121,25 @@ class LogIn extends StatelessWidget {
               const SizedBox(
                 height: 90,
               ),
-              const Text("Don't have an account?", style: TextStyle(
-                color: Colors.white
-              ),),
-              TextButton(onPressed: () {
-                Navigator.pushNamed(context, '/signup');
-              }, style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ), 
-              child: const Text('Create an account.', style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold),
-              ))
+              const Text(
+                "Don't have an account?",
+                style: TextStyle(color: Colors.white),
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signup');
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text(
+                    'Create an account.',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ))
             ],
           ),
         ),
