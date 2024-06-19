@@ -10,13 +10,13 @@ class GoalTemplatesCubit extends Cubit<List<GoalTemplate>>{
 
   GoalTemplateService goalTemplateService = GoalTemplateService();
 
-  void addGoal(GoalTemplate goalTemplate) {
+  void addGoal(GoalTemplate goalTemplate) { // il metodo deve returnare il goalTemplate?
     goalTemplateService.addGoalTemplate(goalTemplate);
     state.add(goalTemplate);
     emit(state);
   }
 
-  void removeGoal(GoalTemplate goalTemplate) {
+  void removeGoal(GoalTemplate goalTemplate) { // va inserito un try catch per l'exception del goalService?
     goalTemplateService.removeGoalTemplate(goalTemplate.goalId);
     state.remove(goalTemplate);
     emit(state);

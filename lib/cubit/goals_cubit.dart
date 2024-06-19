@@ -7,9 +7,23 @@ class GoalsCubit extends Cubit<List<Goal>> {
 
   GoalService goalService = GoalService();
 
-  void addGoal(Goal goal) {
+  void addGoal(Goal goal) {  // il metodo deve returnare il goal?
     goalService.addGoal(goal);
     state.add(goal);
+    emit(state);
+  }
+
+  void removeGoal(Goal goal) {  // va inserito un try catch per l'exception del goalService?
+    goalService.removeGoal(goal.goalId);
+    state.remove(goal);
+    emit(state);
+  }
+
+  void modifyGoal(Goal goal) {
+    goalService.modifyGoal(goal);
+    int index = state.indexOf(goal);
+    state.removeAt(index);
+    state.insert(index, goal);
     emit(state);
   }
 }

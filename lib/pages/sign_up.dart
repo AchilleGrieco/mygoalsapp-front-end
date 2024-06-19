@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:my_goals/service/authentication_service.dart';
 
@@ -14,6 +16,7 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController repeatPasswordController =
       TextEditingController();
+  String errorMessage = "";
 
   @override
   void dispose() {
@@ -74,57 +77,71 @@ class _SignUpState extends State<SignUp> {
               ),
               TextField(
                 controller: emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
                     labelText: 'Email',
                     labelStyle: TextStyle(color: Colors.white)),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               const SizedBox(
                 height: 10,
               ),
               TextField(
                 controller: usernameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
                     labelText: 'Username',
                     labelStyle: TextStyle(color: Colors.white)),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               const SizedBox(
                 height: 10,
               ),
               TextField(
                 controller: passwordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
                     labelText: 'Password',
                     labelStyle: TextStyle(color: Colors.white)),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               const SizedBox(
                 height: 10,
               ),
               TextField(
+                onChanged: (text) {
+                  if (text != passwordController.text) {
+                    setState(() {
+                      errorMessage = "Passwords don't match";
+                    });
+                  }
+                  setState(() {
+                    errorMessage = "";
+                  });
+                },
                 controller: repeatPasswordController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
                     focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
                     labelText: 'Repeat password',
                     labelStyle: TextStyle(color: Colors.white)),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(errorMessage),
               const SizedBox(
                 height: 70,
               ),

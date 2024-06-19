@@ -1,14 +1,14 @@
 import 'dart:ffi';
 
-import 'package:my_goals/model/goal_template.dart';
-
 class Goal {
   final Long goalId;
-  final GoalTemplate goalTemplate;
+  final String name;
+  final String icon;
   final String frequency;
 
   Goal(
       {required this.goalId,
-      required this.goalTemplate,
+      required this.name,
+      required this.icon,
       required this.frequency});
 }

@@ -33,7 +33,7 @@ class GoalTemplateCard extends StatelessWidget {
           //expanded
           const Expanded(child: SizedBox()),
           IconButton(
-            icon: goalTemplate.icon,
+            icon: Text(goalTemplate.icon), // da modificare
             onPressed: () {
               context.read<GoalTemplatesCubit>().modifyGoal(goalTemplate);
             },

@@ -4,6 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:my_goals/config.dart';
 
 class AuthenticationService {
+
+  late final String token;
+
   void register(String email, String username, String password) async {
     Uri url = Uri.http(Config.apiUrl, "/register");
     final body = {"email": email, "username": username, "password": password};
@@ -26,6 +29,7 @@ class AuthenticationService {
     }
     final data = jsonDecode(response.body);
     String jwtToken = data["accesstoken"];
+    token = jwtToken;
     return jwtToken;
   }
 }

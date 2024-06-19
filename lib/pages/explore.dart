@@ -63,9 +63,12 @@ class _ExploreState extends State<Explore> {
               ),
               const SizedBox(
                 height: 40,
-              ), // sixedBox dentro goalcard
+              ), // sixedBox dentro goalTemplateCard
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
         ),
       ),
     ]);
