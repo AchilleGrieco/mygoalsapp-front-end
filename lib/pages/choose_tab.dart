@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_goals/pages/g_nav_bar.dart';
-import 'package:my_goals/pages/explore.dart';
+import 'package:my_goals/pages/goal_templates/explore.dart';
 import 'package:my_goals/pages/goals.dart';
 import 'package:my_goals/pages/home.dart';
 import 'package:my_goals/pages/profile.dart';

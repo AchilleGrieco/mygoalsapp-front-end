@@ -1,13 +1,13 @@
 import 'dart:ffi';
 
-
 class GoalTemplate {
-  final Long goalId;
+  final Long? goalId;
   final String name;
   final String icon;
 
-  GoalTemplate(
-      {required this.goalId,
-      required this.name,
-      required this.icon});
+  GoalTemplate({required this.goalId, required this.name, required this.icon});
+
+  // ci sta come soluzione?
+  GoalTemplate.withoutGoalId({required this.name, required this.icon})
+      : goalId = null;
 }
