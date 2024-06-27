@@ -1,5 +1,5 @@
 class Config {
 
-  static const String apiUrl = "192.168.1.187:8085";
+  static const String apiUrl = "localhost:8080";
 
 }

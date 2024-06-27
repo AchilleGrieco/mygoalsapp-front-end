@@ -19,7 +19,7 @@ class AuthenticationService {
   }
 
   Future<String> login(String username, String password) async {
-    Uri url = Uri.http(Config.apiUrl, "/login");
+    Uri url = Uri.http(Config.apiUrl, "/api/auth/login");
     final body = {"username": username, "password": password};
     final header = {"Content-Type": "application/json"};
     var response =

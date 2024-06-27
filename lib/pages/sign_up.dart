@@ -1,6 +1,5 @@
-import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:my_goals/service/authentication_service.dart';
 
 class SignUp extends StatefulWidget {

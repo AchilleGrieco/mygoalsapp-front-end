@@ -45,8 +45,8 @@ class GoalTemplateService {
     return GoalTemplate(goalId: data.goalId, name: data.name, icon: data.icon);
   }
 
-  void removeGoalTemplate(Long goalId) async {
-    queryParams["param1"] = goalId;
+  void removeGoalTemplate(Long? goalId) async {
+    queryParams["param1"] = goalId!;
     Uri url = Uri.http(Config.apiUrl, "/removeGoal", queryParams);
     final header = {"Content-Type": "application/json",
     "authentication" : token};

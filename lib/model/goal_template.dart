@@ -5,9 +5,6 @@ class GoalTemplate {
   final String name;
   final String icon;
 
-  GoalTemplate({required this.goalId, required this.name, required this.icon});
+  GoalTemplate({this.goalId, required this.name, required this.icon});
 
-  // ci sta come soluzione?
-  GoalTemplate.withoutGoalId({required this.name, required this.icon})
-      : goalId = null;
 }

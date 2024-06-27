@@ -6,23 +6,23 @@ import 'package:my_goals/service/goal_template_service.dart';
 
 class GoalTemplatesCubit extends Cubit<List<GoalTemplate>>{
 
-  GoalTemplatesCubit(List<GoalTemplate> goalTemplates) : super(goalTemplates);
+  GoalTemplatesCubit(super.goalTemplates);
 
   GoalTemplateService goalTemplateService = GoalTemplateService();
 
-  void addGoal(GoalTemplate goalTemplate) { // il metodo deve returnare il goalTemplate?
+  void addGoalTemplate(GoalTemplate goalTemplate) { // il metodo deve returnare il goalTemplate?
     goalTemplateService.addGoalTemplate(goalTemplate);
     state.add(goalTemplate);
     emit(state);
   }
 
-  void removeGoal(GoalTemplate goalTemplate) { // va inserito un try catch per l'exception del goalService?
+  void removeGoalTemplate(GoalTemplate goalTemplate) { // va inserito un try catch per l'exception del goalService?
     goalTemplateService.removeGoalTemplate(goalTemplate.goalId);
     state.remove(goalTemplate);
     emit(state);
   }
 
-  void modifyGoal(GoalTemplate goalTemplate) {
+  void modifyGoalTemplate(GoalTemplate goalTemplate) {
     goalTemplateService.modifyGoalTemplate(goalTemplate);
     int index = state.indexOf(goalTemplate);
     state.removeAt(index);

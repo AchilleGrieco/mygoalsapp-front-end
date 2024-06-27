@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_goals/cubit/goal_templates_cubit.dart';
 import 'package:my_goals/model/goal_template.dart';
+import 'package:my_goals/pages/goal_templates/goal_template_bottom_sheet.dart';
 
 class GoalTemplateCard extends StatelessWidget {
   const GoalTemplateCard({super.key, required this.goalTemplate});
@@ -19,8 +20,8 @@ class GoalTemplateCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(30, 0, 10, 0),
         child: Row(children: [
-          const Icon(
-            Icons.run_circle,
+          Icon(
+            IconData(goalTemplate.icon as int),
             size: 58,
           ),
           const SizedBox(
@@ -33,9 +34,9 @@ class GoalTemplateCard extends StatelessWidget {
           //expanded
           const Expanded(child: SizedBox()),
           IconButton(
-            icon: Text(goalTemplate.icon), // da modificare
+            icon: const Icon(Icons.update),
             onPressed: () {
-              context.read<GoalTemplatesCubit>().modifyGoal(goalTemplate);
+              const GoalTemplateBottomSheet(method: "modify");
             },
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
@@ -44,7 +45,7 @@ class GoalTemplateCard extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              context.read<GoalTemplatesCubit>().removeGoal(goalTemplate);
+              context.read<GoalTemplatesCubit>().removeGoalTemplate(goalTemplate);
             },
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),

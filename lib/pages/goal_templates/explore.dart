@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_goals/cubit/goal_templates_cubit.dart';
@@ -70,11 +70,11 @@ class _ExploreState extends State<Explore> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          child: Text("add GoalTemplate"),
+          child: const Text("add GoalTemplate"),
           onPressed: () {
             showCupertinoModalBottomSheet(
                 context: context,
-                builder: (context) => GoalTemplateBottomSheet());
+                builder: (context) => const GoalTemplateBottomSheet(method: "add",));
           },
         ),
       ),
