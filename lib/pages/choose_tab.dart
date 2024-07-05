@@ -20,17 +20,19 @@ class ChooseTab extends StatefulWidget {
 class _ChooseTabState extends State<ChooseTab> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-  Future<List<GoalTemplate>> chargeGoalTemplates() async {
-    List<GoalTemplate> goalTemplates = await GoalTemplateService().getGoalTemplates();
+  Future<List<GoalTemplate>> chargeGoalTemplates(BuildContext context) async {
+    List<GoalTemplate> goalTemplates =
+        await GoalTemplateService().getGoalTemplates(context);
     return goalTemplates;
   }
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => GoalTemplatesCubit(chargeGoalTemplates() as List<GoalTemplate>),
+        create: (context) => GoalTemplatesCubit(
+            chargeGoalTemplates(context) as List<GoalTemplate>),
+        // aggiungere il BlocProvider dello User
         child: BlocProvider(
           create: (context) => SelectedIconCubit(null),
           child: Navigator(

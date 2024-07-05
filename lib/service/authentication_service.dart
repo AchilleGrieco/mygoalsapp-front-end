@@ -1,14 +1,13 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:http/http.dart' as http;
 import 'package:my_goals/config.dart';
+import 'package:my_goals/model/user.dart';
 
 class AuthenticationService {
-
-  late final String token;
-
   void register(String email, String username, String password) async {
-    Uri url = Uri.http(Config.apiUrl, "/register");
+    Uri url = Uri.http(Config.apiUrl, "api/auth/register");
     final body = {"email": email, "username": username, "password": password};
     final header = {"Content-Type": "application/json"};
     var response =
@@ -18,7 +17,7 @@ class AuthenticationService {
     }
   }
 
-  Future<String> login(String username, String password) async {
+  Future<User> login(String username, String password) async {
     Uri url = Uri.http(Config.apiUrl, "/api/auth/login");
     final body = {"username": username, "password": password};
     final header = {"Content-Type": "application/json"};
@@ -28,8 +27,10 @@ class AuthenticationService {
       throw Exception();
     }
     final data = jsonDecode(response.body);
-    String jwtToken = data["accesstoken"];
-    token = jwtToken;
-    return jwtToken;
+    String jwtToken = data["accessToken"];
+    String name = data["username"];
+    Long userId = data["userId"];
+    User user = User(userId: userId, username: name, token: jwtToken);
+    return user;
   }
 }

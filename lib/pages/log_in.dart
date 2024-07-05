@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_goals/cubit/user_cubit.dart';
+import 'package:my_goals/model/user.dart';
 import 'package:my_goals/service/authentication_service.dart';
 
 class LogIn extends StatefulWidget {
@@ -105,9 +108,14 @@ class _LogInState extends State<LogIn> {
                         colors: [Colors.blueAccent, Colors.greenAccent])),
                 child: ElevatedButton(
                   onPressed: () {
-                    AuthenticationService().login(
-                        usernameController.text, passwordController.text);
-                    Navigator.pushNamed(context, '/choosetab');
+                    try {
+                      Future<User> user = AuthenticationService().login(
+                          usernameController.text, passwordController.text);
+                      context.read<UserCubit>().set(user as User);
+                      Navigator.pushNamed(context, '/choosetab');
+                    } on Exception {
+                      throw Exception();
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,

@@ -6,7 +6,8 @@ import 'package:my_goals/model/goal_template.dart';
 import 'package:my_goals/pages/icons_dropdown.dart';
 
 class GoalTemplateBottomSheet extends StatefulWidget {
-  const GoalTemplateBottomSheet({super.key, this.goalTemplate, required this.method});
+  const GoalTemplateBottomSheet(
+      {super.key, this.goalTemplate, required this.method});
 
   final GoalTemplate? goalTemplate;
   final String method;
@@ -17,7 +18,6 @@ class GoalTemplateBottomSheet extends StatefulWidget {
 }
 
 class _GoalTemplateBottomSheetState extends State<GoalTemplateBottomSheet> {
-  
   late TextEditingController nameController;
   late String errorMessage;
 
@@ -45,35 +45,42 @@ class _GoalTemplateBottomSheetState extends State<GoalTemplateBottomSheet> {
           ),
           const Text("Icon"),
           IconsDropDown(goalTemplate: widget.goalTemplate),
-          ElevatedButton(onPressed: () {
-            IconData? icon = context.read<SelectedIconCubit>().state;
-            if (icon == null || nameController.text.isEmpty) {
-              setState(() {
-                errorMessage = "Icon can't be null and name can't be empty";
-              });
-            }
-            else {
-              GoalTemplate goalTemplate = GoalTemplate(name: nameController.text, icon: icon.codePoint as String);
-              if (widget.method == "add") {
-                try {
-                  context.read<GoalTemplatesCubit>().addGoalTemplate(goalTemplate);
-                } on Exception {
+          ElevatedButton(
+              onPressed: () {
+                IconData? icon = context.read<SelectedIconCubit>().state;
+                if (icon == null || nameController.text.isEmpty) {
                   setState(() {
-                    errorMessage = "Goal Template not added";
+                    errorMessage = "Icon can't be null and name can't be empty";
                   });
+                } else {
+                  GoalTemplate goalTemplate = GoalTemplate(
+                      name: nameController.text,
+                      icon: icon.codePoint as String);
+                  if (widget.method == "add") {
+                    try {
+                      context
+                          .read<GoalTemplatesCubit>()
+                          .addGoalTemplate(goalTemplate, context);
+                    } on Exception {
+                      setState(() {
+                        errorMessage = "Goal Template not added";
+                      });
+                    }
+                  }
+                  if (widget.method == "modify") {
+                    try {
+                      context
+                          .read<GoalTemplatesCubit>()
+                          .modifyGoalTemplate(goalTemplate, context);
+                    } on Exception {
+                      setState(() {
+                        errorMessage = "Update wans't successful";
+                      });
+                    }
+                  }
                 }
-              }
-              if (widget.method == "modify") {
-                try {
-                  context.read<GoalTemplatesCubit>().modifyGoalTemplate(goalTemplate);
-                } on Exception {
-                  setState(() {
-                    errorMessage = "Update wans't successful";
-                  });
-                }
-              }
-            }
-          }, child: const Text("Press")),
+              },
+              child: const Text("Press")),
           Text(errorMessage)
         ],
       ),

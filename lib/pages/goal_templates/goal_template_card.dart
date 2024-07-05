@@ -45,7 +45,9 @@ class GoalTemplateCard extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              context.read<GoalTemplatesCubit>().removeGoalTemplate(goalTemplate);
+              context
+                  .read<GoalTemplatesCubit>()
+                  .removeGoalTemplate(goalTemplate, context);
             },
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),

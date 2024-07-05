@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:my_goals/service/authentication_service.dart';
 
@@ -154,9 +153,13 @@ class _SignUpState extends State<SignUp> {
                         colors: [Colors.blueAccent, Colors.greenAccent])),
                 child: ElevatedButton(
                   onPressed: () {
-                    AuthenticationService().register(emailController.text,
-                        usernameController.text, passwordController.text);
-                    Navigator.pushNamed(context, '/login');
+                    try {
+                      AuthenticationService().register(emailController.text,
+                          usernameController.text, passwordController.text);
+                      Navigator.pushNamed(context, '/login');
+                    } on Exception {
+                      throw Exception();
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,

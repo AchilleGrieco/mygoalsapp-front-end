@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_goals/cubit/user_cubit.dart';
+import 'package:my_goals/model/user.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
+    User user = context.read<UserCubit>().state!;
+
     return Stack(children: [
       Positioned.fill(
           child: Image.asset(
@@ -55,8 +60,8 @@ class Home extends StatelessWidget {
                   'Welcome back',
                   style: TextStyle(fontSize: 26, color: Colors.white),
                 ),
-                const Text(
-                  'Achille',
+                Text(
+                  user!.username,
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -69,7 +74,7 @@ class Home extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "1",
+                        "",
                         style: TextStyle(color: Colors.white, fontSize: 24),
                       ),
                       SizedBox(

@@ -24,12 +24,14 @@ class GoalCard extends StatelessWidget {
           child: Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [IconButton(
-                onPressed: () {
-                  context.read<GoalsCubit>().removeGoal(goal);
-                },
-                icon: const Icon(Icons.delete),
-              )],
+              children: [
+                IconButton(
+                  onPressed: () {
+                    context.read<GoalsCubit>().removeGoal(goal, context);
+                  },
+                  icon: const Icon(Icons.delete),
+                )
+              ],
             ),
             const Column(
               mainAxisAlignment: MainAxisAlignment.center,

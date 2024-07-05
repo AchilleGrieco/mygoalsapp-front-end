@@ -1,26 +1,29 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_goals/model/goal.dart';
 import 'package:my_goals/service/goal_service.dart';
 
 class GoalsCubit extends Cubit<List<Goal>> {
-  GoalsCubit(List<Goal> goals) : super(goals);
+  GoalsCubit(super.goals);
 
   GoalService goalService = GoalService();
 
-  void addGoal(Goal goal) {  // il metodo deve returnare il goal?
-    goalService.addGoal(goal);
+  void addGoal(Goal goal, BuildContext context) {
+    // il metodo deve returnare il goal?
+    goalService.addGoal(goal, context);
     state.add(goal);
     emit(state);
   }
 
-  void removeGoal(Goal goal) {  // va inserito un try catch per l'exception del goalService?
-    goalService.removeGoal(goal.goalId);
+  void removeGoal(Goal goal, BuildContext context) {
+    // va inserito un try catch per l'exception del goalService?
+    goalService.removeGoal(goal.goalId!, context);
     state.remove(goal);
     emit(state);
   }
 
-  void modifyGoal(Goal goal) {
-    goalService.modifyGoal(goal);
+  void modifyGoal(Goal goal, BuildContext context) {
+    goalService.modifyGoal(goal, context);
     int index = state.indexOf(goal);
     state.removeAt(index);
     state.insert(index, goal);
