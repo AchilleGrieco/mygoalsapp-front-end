@@ -1,7 +1,6 @@
-import 'dart:ffi';
 
 class User {
-  final Long userId;
+  final int userId;
   final String username;
   final String token;
 

@@ -1,3 +1,3 @@
 class Config {
-  static const String apiUrl = "192.168.1.15:8080";
+  static const String apiUrl = "192.168.1.4:8080";
 }

@@ -107,14 +107,14 @@ class _LogInState extends State<LogIn> {
                     gradient: const LinearGradient(
                         colors: [Colors.blueAccent, Colors.greenAccent])),
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     try {
-                      Future<User> user = AuthenticationService().login(
+                      User user = await AuthenticationService().login(
                           usernameController.text, passwordController.text);
-                      context.read<UserCubit>().set(user as User);
+                      context.read<UserCubit>().set(user);
                       Navigator.pushNamed(context, '/choosetab');
                     } on Exception {
-                      throw Exception();
+                      rethrow;
                     }
                   },
                   style: ElevatedButton.styleFrom(

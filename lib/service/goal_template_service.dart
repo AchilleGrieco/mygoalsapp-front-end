@@ -10,13 +10,14 @@ import 'package:my_goals/model/goal_template.dart';
 class GoalTemplateService {
   late Map<String, Object> queryParams;
 
-  Future<List<GoalTemplate>> getGoalTemplates(BuildContext context) async {
-    String token = context.read<UserCubit>().state!.token;
-    Uri url = Uri.http(Config.apiUrl, "/getGoals");
-    final header = {"authentication": token};
+
+  static Future<List<GoalTemplate>> getGoalTemplates(String token) async {
+    
+    Uri url = Uri.http(Config.apiUrl, "goalTemplates");
+    final header = {"Authorization": "Bearer $token"};
     final response = await http.get(url, headers: header);
     if (response.statusCode != 200) {
-      throw Exception();
+      throw Exception("$token - ${response.statusCode}");
     }
     final data = jsonDecode(response.body);
     List<GoalTemplate> goals = List.generate(data.length, (index) {

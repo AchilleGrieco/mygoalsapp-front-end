@@ -29,7 +29,7 @@ class AuthenticationService {
     final data = jsonDecode(response.body);
     String jwtToken = data["accessToken"];
     String name = data["username"];
-    Long userId = data["userId"];
+    int userId = data["userId"];
     User user = User(userId: userId, username: name, token: jwtToken);
     return user;
   }
