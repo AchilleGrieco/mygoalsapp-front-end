@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_goals/cubit/goal_templates_cubit.dart';
+import 'package:my_goals/cubit/selected_icon_cubit.dart';
 import 'package:my_goals/model/goal_template.dart';
 import 'package:my_goals/pages/goal_templates/goal_template_bottom_sheet.dart';
 
@@ -21,7 +23,7 @@ class GoalTemplateCard extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(30, 0, 10, 0),
         child: Row(children: [
           Icon(
-            IconData(goalTemplate.icon as int),
+            IconData(int.parse(goalTemplate.icon), fontFamily: 'MaterialIcons'),
             size: 58,
           ),
           const SizedBox(
@@ -36,7 +38,11 @@ class GoalTemplateCard extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.update),
             onPressed: () {
-              const GoalTemplateBottomSheet(method: "modify");
+              showCupertinoModalBottomSheet(
+                context: context,
+                builder: (context) => BlocProvider(
+                  create: (context) => SelectedIconCubit(icon: int.parse(goalTemplate.icon)),
+                  child: GoalTemplateBottomSheet(goalTemplate: goalTemplate, method: "modify",)));
             },
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),

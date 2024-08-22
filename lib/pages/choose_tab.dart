@@ -22,12 +22,9 @@ class ChooseTab extends StatelessWidget {
       body: FutureBuilder(
         future: GoalTemplateService.getGoalTemplates(token),
         builder: (context, snapshot) {
-        
           if (snapshot.hasData) {
             return BlocProvider(
               create: (context) => GoalTemplatesCubit(snapshot.data!),
-              child: BlocProvider(
-                create: (context) => SelectedIconCubit(null),
                 child: Navigator(
                   key: navigatorKey,
                   initialRoute: '/home',
@@ -58,13 +55,15 @@ class ChooseTab extends StatelessWidget {
                         builder: builder, settings: settings);
                   },
                 ),
-              ),
             );
+          }
+          else if (snapshot.hasError) {
+            return Center(child: Text(snapshot.error.toString()),);
           }
           else {
             return const Center(child: CircularProgressIndicator());
           }
-        },
+        }
       ),
       bottomNavigationBar: GNavBar(
         navigatorKey: navigatorKey,

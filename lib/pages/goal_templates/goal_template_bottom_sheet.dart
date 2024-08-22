@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_goals/cubit/goal_templates_cubit.dart';
 import 'package:my_goals/cubit/selected_icon_cubit.dart';
+import 'package:my_goals/model/goal.dart';
 import 'package:my_goals/model/goal_template.dart';
 import 'package:my_goals/pages/icons_dropdown.dart';
 
@@ -19,7 +20,7 @@ class GoalTemplateBottomSheet extends StatefulWidget {
 
 class _GoalTemplateBottomSheetState extends State<GoalTemplateBottomSheet> {
   late TextEditingController nameController;
-  late String errorMessage;
+  String errorMessage = "";
 
   @override
   void initState() {
@@ -33,8 +34,13 @@ class _GoalTemplateBottomSheetState extends State<GoalTemplateBottomSheet> {
     super.dispose();
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
+
+    IconsDropDown iconsDropDown = IconsDropDown(goalTemplate: widget.goalTemplate,);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(40, 50, 40, 50),
       child: Column(
@@ -43,24 +49,27 @@ class _GoalTemplateBottomSheetState extends State<GoalTemplateBottomSheet> {
           TextField(
             controller: nameController,
           ),
+          Icon(IconData(context.watch<SelectedIconCubit>().state, fontFamily: 'MaterialIcons')),
           const Text("Icon"),
-          IconsDropDown(goalTemplate: widget.goalTemplate),
+          iconsDropDown,
           ElevatedButton(
               onPressed: () {
-                IconData? icon = context.read<SelectedIconCubit>().state;
-                if (icon == null || nameController.text.isEmpty) {
+                int? icon = context.read<SelectedIconCubit>().state;
+                if (nameController.text.isEmpty) {
                   setState(() {
                     errorMessage = "Icon can't be null and name can't be empty";
                   });
                 } else {
-                  GoalTemplate goalTemplate = GoalTemplate(
-                      name: nameController.text,
-                      icon: icon.codePoint as String);
+                  
                   if (widget.method == "add") {
                     try {
+                      GoalTemplate goalTemplate = GoalTemplate(
+                      name: nameController.text,
+                      icon: icon.toString());
                       context
                           .read<GoalTemplatesCubit>()
                           .addGoalTemplate(goalTemplate, context);
+                        Navigator.pop(context);
                     } on Exception {
                       setState(() {
                         errorMessage = "Goal Template not added";
@@ -69,9 +78,12 @@ class _GoalTemplateBottomSheetState extends State<GoalTemplateBottomSheet> {
                   }
                   if (widget.method == "modify") {
                     try {
+                      widget.goalTemplate!.name = nameController.text;
+                      widget.goalTemplate!.icon = icon.toString();
                       context
                           .read<GoalTemplatesCubit>()
-                          .modifyGoalTemplate(goalTemplate, context);
+                          .modifyGoalTemplate(widget.goalTemplate!, context);
+                          Navigator.pop(context);
                     } on Exception {
                       setState(() {
                         errorMessage = "Update wans't successful";

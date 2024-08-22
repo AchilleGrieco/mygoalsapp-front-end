@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_goals/cubit/goal_templates_cubit.dart';
+import 'package:my_goals/cubit/selected_icon_cubit.dart';
 import 'package:my_goals/model/goal_template.dart';
 import 'package:my_goals/pages/goal_templates/goal_template_bottom_sheet.dart';
 import 'package:my_goals/pages/goal_templates/goal_template_card.dart';
@@ -55,9 +56,9 @@ class _ExploreState extends State<Explore> {
               BlocBuilder<GoalTemplatesCubit, List<GoalTemplate>>(
                 builder: (context, state) {
                   return Column(
-                    children: List.generate(state.length, (index) {
+                    children: List.generate(context.watch<GoalTemplatesCubit>().state.length, (index) {
                       return GoalTemplateCard(
-                        goalTemplate: state[index],
+                        goalTemplate: context.read<GoalTemplatesCubit>().state[index],
                       );
                     }),
                   );
@@ -70,11 +71,12 @@ class _ExploreState extends State<Explore> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          child: const Text("add GoalTemplate"),
+          child: const Text("+"),
           onPressed: () {
             showCupertinoModalBottomSheet(
                 context: context,
-                builder: (context) => const GoalTemplateBottomSheet(method: "add",));
+                builder: (context) => BlocProvider(
+                  create: (context) => SelectedIconCubit(), child: const GoalTemplateBottomSheet(method: "add",)));
           },
         ),
       ),

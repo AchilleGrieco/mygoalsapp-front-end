@@ -1,10 +1,41 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_goals/cubit/user_cubit.dart';
 import 'package:my_goals/model/user.dart';
+import 'package:my_goals/service/authentication_service.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+   Timer? _timer;
+
+   @override
+    void initState() {
+    super.initState();
+    _scheduleTokenRefresh();
+  }
+
+  void _scheduleTokenRefresh() {
+    const refreshInterval = Duration(minutes: 30);
+
+    _timer = Timer.periodic(refreshInterval, (timer) async {
+      await AuthenticationService().reLogin(context.read<UserCubit>().state!);
+    });
+  }
+
+    @override
+    void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +92,8 @@ class Home extends StatelessWidget {
                   style: TextStyle(fontSize: 26, color: Colors.white),
                 ),
                 Text(
-                  user!.username,
-                  style: TextStyle(
+                  user.username,
+                  style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
@@ -77,19 +108,8 @@ class Home extends StatelessWidget {
                         "",
                         style: TextStyle(color: Colors.white, fontSize: 24),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Icon(
-                        Icons.cloud,
-                        color: Colors.white,
-                        size: 50,
-                      ),
+                      
                     ]),
-                const Text(
-                  "Days Streak",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                )
               ],
             ),
           ),
