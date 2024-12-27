@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:my_goals/cubit/user_cubit.dart';
 import 'package:my_goals/page/navigation/choose_tab.dart';
 import 'package:my_goals/page/navigation/log_in.dart';
 import 'package:my_goals/page/navigation/sign_up.dart';
 
 void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(
     BlocProvider(
       create: (context) => UserCubit(null),
