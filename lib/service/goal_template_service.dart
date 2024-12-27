@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_goals/config.dart';
+import 'package:my_goals/utility/config.dart';
 import 'package:my_goals/cubit/user_cubit.dart';
 import 'package:my_goals/model/goal_template.dart';
 

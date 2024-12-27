@@ -4,8 +4,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_goals/cubit/goals_cubit.dart';
 import 'package:my_goals/cubit/selected_goal_template_cubit.dart';
 import 'package:my_goals/model/goal.dart';
-import 'package:my_goals/pages/goal_bottom_sheet.dart';
-import 'package:my_goals/pages/goal_card.dart';
+import 'package:my_goals/page/goals/goal_bottom_sheet.dart';
+import 'package:my_goals/page/goals/goal_card.dart';
 
 class Goals extends StatelessWidget {
   const Goals({super.key});

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:my_goals/config.dart';
+import 'package:my_goals/utility/config.dart';
 import 'package:my_goals/model/user.dart';
-import 'package:my_goals/service/secure_storage.dart';
+import 'package:my_goals/utility/secure_storage.dart';
 
 class AuthenticationService {
 

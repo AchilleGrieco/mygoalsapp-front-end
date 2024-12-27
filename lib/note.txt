@@ -1,5 +1,0 @@
-- aggiungere modalbottomSheet (cupertino style) per aggiunta e modifica goaltemplate con collegamento a backend (tempo stimato: 1h 30m)
-- chiedere a tommy verifica metodi goalTemplateCubit (tempo stimato 20 min)
-- aggiungere modalbottomSheet (cupertino style) per aggiunta e modifica goal con collegamento a backend (tempo stimato: 1h 30m)
-- set up di goalCards nella pagina goals (tempo stimato 20m)
-- creare scheda profilo (tempo stimato 2 ore)

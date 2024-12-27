@@ -6,7 +6,7 @@ import 'package:my_goals/cubit/selected_goal_template_cubit.dart';
 import 'package:my_goals/cubit/selected_icon_cubit.dart';
 import 'package:my_goals/model/goal.dart';
 import 'package:my_goals/model/goal_template.dart';
-import 'package:my_goals/pages/goal_templates_dropdown.dart';
+import 'package:my_goals/page/goal_templates/goal_templates_dropdown.dart';
 
 class GoalBottomSheet extends StatefulWidget {
   const GoalBottomSheet({super.key});

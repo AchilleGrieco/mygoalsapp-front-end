@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_goals/cubit/goal_templates_cubit.dart';
 import 'package:my_goals/model/goal_template.dart';
-import 'package:my_goals/pages/goal_templates/goal_template_bottom_sheet.dart';
+import 'package:my_goals/page/goal_templates/goal_template_bottom_sheet.dart';
 
 class GoalTemplateCard extends StatelessWidget {
   const GoalTemplateCard({super.key, required this.goalTemplate});

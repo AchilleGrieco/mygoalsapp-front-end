@@ -4,8 +4,8 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_goals/cubit/goal_templates_cubit.dart';
 import 'package:my_goals/cubit/selected_icon_cubit.dart';
 import 'package:my_goals/model/goal_template.dart';
-import 'package:my_goals/pages/goal_templates/goal_template_bottom_sheet.dart';
-import 'package:my_goals/pages/goal_templates/goal_template_card.dart';
+import 'package:my_goals/page/goal_templates/goal_template_bottom_sheet.dart';
+import 'package:my_goals/page/goal_templates/goal_template_card.dart';
 
 class Explore extends StatefulWidget {
   const Explore({super.key});
