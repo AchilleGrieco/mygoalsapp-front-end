@@ -24,10 +24,12 @@ class _HomeState extends State<Home> {
   }
 
   void _scheduleTokenRefresh() {
-    const refreshInterval = Duration(minutes: 30);
+    const refreshInterval = Duration(minutes: 2);
 
     _timer = Timer.periodic(refreshInterval, (timer) async {
-      await AuthenticationService().reLogin(context.read<UserCubit>().state!);
+      User user = await AuthenticationService().reLogin(context.read<UserCubit>().state!);
+      context.read<UserCubit>().set(user);
+      
     });
   }
 
@@ -38,7 +40,7 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     User user = context.read<UserCubit>().state!;
 
     return Stack(children: [
@@ -54,27 +56,16 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.fromLTRB(50, 40, 50, 20),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    const Text(
+                    Text(
                       'Home',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-                    const Icon(
-                      Icons.more_horiz,
-                      size: 32,
-                      color: Colors.white,
-                    )
                   ],
                 ),
                 const SizedBox(

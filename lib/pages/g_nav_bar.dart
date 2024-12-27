@@ -42,12 +42,6 @@ class _GNavBarState extends State<GNavBar> {
                   currentIndex = index;
                 });
               }
-              if (index == 3) {
-                widget.navigatorKey.currentState?.pushNamed('/profile');
-                setState(() {
-                  currentIndex = index;
-                });
-              }
             },
             gap: 8,
             tabBackgroundColor: Colors.grey.shade300,
@@ -59,10 +53,6 @@ class _GNavBarState extends State<GNavBar> {
               ),
               GButton(icon: Icons.track_changes_outlined, text: 'Explore'),
               GButton(icon: Icons.star, text: 'Goals'),
-              GButton(
-                icon: Icons.account_circle_sharp,
-                text: 'Profile',
-              )
             ],
           ),
         ),

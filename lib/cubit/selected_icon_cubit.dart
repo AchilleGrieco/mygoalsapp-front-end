@@ -8,4 +8,5 @@ class SelectedIconCubit extends Cubit<int> {
   void set(int icon) {
     emit(icon);
   }
+
 }

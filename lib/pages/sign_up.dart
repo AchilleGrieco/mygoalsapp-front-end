@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:flutter/services.dart';
 import 'package:my_goals/service/authentication_service.dart';
 
 class SignUp extends StatefulWidget {
@@ -15,6 +16,31 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController repeatPasswordController =
       TextEditingController();
   String errorMessage = "";
+
+  // Helper method to check if all fields are filled
+  bool allFieldsFilled() {
+    return emailController.text.isNotEmpty &&
+        usernameController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        repeatPasswordController.text.isNotEmpty;
+  }
+
+  // Helper method to validate all fields and update error message
+  void validateFields() {
+    setState(() {
+      if (!allFieldsFilled()) {
+        errorMessage = "All fields are required";
+      } else if (!emailController.text.contains('@')) {
+        errorMessage = "Email must contain '@'";
+      } else if (emailController.text.split('@').length > 2) {
+        errorMessage = "Email cannot contain multiple '@' symbols";
+      } else if (passwordController.text != repeatPasswordController.text) {
+        errorMessage = "Passwords don't match";
+      } else {
+        errorMessage = "";
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -71,10 +97,16 @@ class _SignUpState extends State<SignUp> {
                 ],
               ),
               const SizedBox(
-                height: 40,
+                height: 30,
               ),
               TextField(
                 controller: emailController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                ],
+                onChanged: (text) {
+                  validateFields();
+                },
                 decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -89,6 +121,13 @@ class _SignUpState extends State<SignUp> {
               ),
               TextField(
                 controller: usernameController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                  LengthLimitingTextInputFormatter(14),
+                ],
+                onChanged: (text) {
+                  validateFields();
+                },
                 decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -103,6 +142,13 @@ class _SignUpState extends State<SignUp> {
               ),
               TextField(
                 controller: passwordController,
+                obscureText: true,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(32),
+                ],
+                onChanged: (text) {
+                  validateFields();
+                },
                 decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -117,16 +163,13 @@ class _SignUpState extends State<SignUp> {
               ),
               TextField(
                 onChanged: (text) {
-                  if (text != passwordController.text) {
-                    setState(() {
-                      errorMessage = "Passwords don't match";
-                    });
-                  }
-                  setState(() {
-                    errorMessage = "";
-                  });
+                  validateFields();
                 },
                 controller: repeatPasswordController,
+                obscureText: true,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(32),
+                ],
                 decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -139,9 +182,19 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 10,
               ),
-              Text(errorMessage),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  errorMessage,
+                  style: const TextStyle(color: Colors.red, fontSize: 14),
+                  textAlign: TextAlign.center,
+                  softWrap: true,
+                  maxLines: 3,
+                ),
+              ),
               const SizedBox(
-                height: 70,
+                height: 30,
               ),
               Container(
                 width: 140,
@@ -152,13 +205,21 @@ class _SignUpState extends State<SignUp> {
                     gradient: const LinearGradient(
                         colors: [Colors.blueAccent, Colors.greenAccent])),
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    validateFields();
+                    if (errorMessage.isNotEmpty) {
+                      return;
+                    }
+
                     try {
-                      AuthenticationService().register(emailController.text,
-                          usernameController.text, passwordController.text);
-                      Navigator.pushNamed(context, '/login');
-                    } on Exception {
-                      throw Exception();
+                      await AuthenticationService()
+                          .register(emailController.text,
+                              usernameController.text, passwordController.text);
+                      Navigator.pop(context);
+                    } catch (error) {
+                      setState(() {
+                        errorMessage = error.toString().replaceAll('Exception: ', '');
+                      });
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -171,7 +232,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               const SizedBox(
-                height: 90,
+                height: 60,
               ),
               const Text(
                 'Already have an account?',

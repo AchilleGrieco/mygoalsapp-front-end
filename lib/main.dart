@@ -10,6 +10,7 @@ void main() async {
     BlocProvider(
       create: (context) => UserCubit(null),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         initialRoute: '/login',
         routes: {
           '/signup': (context) => const SignUp(),

@@ -8,18 +8,18 @@ class GoalsCubit extends Cubit<List<Goal>> {
 
   GoalService goalService = GoalService();
 
-  void addGoal(Goal goal, BuildContext context) {
-    // il metodo deve returnare il goal?
-    goalService.addGoal(goal, context);
-    state.add(goal);
-    emit(state);
+  void addGoal(Goal goal, BuildContext context) async {
+    final createdGoal = await goalService.addGoal(goal, context);
+    List<Goal> newState = List.from(state);
+    newState.add(createdGoal);
+    emit(newState);
   }
 
-  void removeGoal(Goal goal, BuildContext context) {
-    // va inserito un try catch per l'exception del goalService?
-    goalService.removeGoal(goal.goalId!, context);
-    state.remove(goal);
-    emit(state);
+  Future<void> removeGoal(Goal goal, BuildContext context) async {
+    await goalService.removeGoal(goal.goalId!, context);
+    List<Goal> newState = List.from(state);
+    newState.remove(goal);
+    emit(newState);
   }
 
   void modifyGoal(Goal goal, BuildContext context) {

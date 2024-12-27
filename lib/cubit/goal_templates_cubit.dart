@@ -8,25 +8,26 @@ class GoalTemplatesCubit extends Cubit<List<GoalTemplate>> {
 
   GoalTemplateService goalTemplateService = GoalTemplateService();
 
-  void addGoalTemplate(GoalTemplate goalTemplate, BuildContext context) {
-    // il metodo deve returnare il goalTemplate?
-    goalTemplateService.addGoalTemplate(goalTemplate, context);
-    state.add(goalTemplate);
-    emit(state);
+  void addGoalTemplate(GoalTemplate goalTemplate, BuildContext context) async {
+    final createdTemplate = await goalTemplateService.addGoalTemplate(goalTemplate, context);
+    List<GoalTemplate> newState = List.from(state);
+    newState.add(createdTemplate);  // Use the created template with the server-assigned ID
+    emit(newState);
   }
 
-  void removeGoalTemplate(GoalTemplate goalTemplate, BuildContext context) {
-    // va inserito un try catch per l'exception del goalService?
-    goalTemplateService.removeGoalTemplate(goalTemplate.goalId, context);
-    state.remove(goalTemplate);
-    emit(state);
+  Future<void> removeGoalTemplate(GoalTemplate goalTemplate, BuildContext context) async{
+    await goalTemplateService.removeGoalTemplate(goalTemplate.goalId!, context);
+    List<GoalTemplate> newState = List.from(state);
+    newState.remove(goalTemplate);
+    emit(newState);
   }
 
-  void modifyGoalTemplate(GoalTemplate goalTemplate, BuildContext context) {
-    goalTemplateService.modifyGoalTemplate(goalTemplate, context);
-    int index = state.indexOf(goalTemplate);
-    state.removeAt(index);
-    state.insert(index, goalTemplate);
-    emit(state);
+  void modifyGoalTemplate(GoalTemplate goalTemplate, BuildContext context) async {
+    await goalTemplateService.modifyGoalTemplate(goalTemplate, context);
+    List<GoalTemplate> newState = List.from(state);
+    int index = newState.indexOf(goalTemplate);
+    newState.removeAt(index);
+    newState.insert(index, goalTemplate);
+    emit(newState);
   }
 }

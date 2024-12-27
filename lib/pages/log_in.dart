@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_goals/cubit/user_cubit.dart';
 import 'package:my_goals/model/user.dart';
@@ -14,6 +17,10 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+
+
+  
 
   @override
   void dispose() {
@@ -72,6 +79,10 @@ class _LogInState extends State<LogIn> {
               ),
               TextField(
                 controller: usernameController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                  LengthLimitingTextInputFormatter(14),
+                ],
                 decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -86,6 +97,10 @@ class _LogInState extends State<LogIn> {
               ),
               TextField(
                 controller: passwordController,
+                obscureText: true,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(32),
+                ],
                 decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white)),
@@ -113,8 +128,15 @@ class _LogInState extends State<LogIn> {
                           usernameController.text, passwordController.text);
                       context.read<UserCubit>().set(user);
                       Navigator.pushNamed(context, '/choosetab');
-                    } on Exception {
-                      rethrow;
+                    } catch (error) {
+                      setState(() {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(error.toString().replaceAll('Exception: ', '')),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      });
                     }
                   },
                   style: ElevatedButton.styleFrom(

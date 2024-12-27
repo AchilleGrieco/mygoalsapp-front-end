@@ -2,7 +2,6 @@ import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:my_goals/cubit/goal_templates_cubit.dart';
-import 'package:my_goals/cubit/selected_icon_cubit.dart';
 import 'package:my_goals/model/goal_template.dart';
 import 'package:my_goals/pages/goal_templates/goal_template_bottom_sheet.dart';
 
@@ -31,7 +30,7 @@ class GoalTemplateCard extends StatelessWidget {
           ),
           Text(
             goalTemplate.name,
-            style: const TextStyle(fontSize: 24),
+            style: const TextStyle(fontSize: 20),
           ),
           //expanded
           const Expanded(child: SizedBox()),
@@ -39,10 +38,11 @@ class GoalTemplateCard extends StatelessWidget {
             icon: const Icon(Icons.update),
             onPressed: () {
               showCupertinoModalBottomSheet(
-                context: context,
-                builder: (context) => BlocProvider(
-                  create: (context) => SelectedIconCubit(icon: int.parse(goalTemplate.icon)),
-                  child: GoalTemplateBottomSheet(goalTemplate: goalTemplate, method: "modify",)));
+                  context: context,
+                  builder: (context) => GoalTemplateBottomSheet(
+                        goalTemplate: goalTemplate,
+                        method: "modify",
+                      ));
             },
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
@@ -50,10 +50,28 @@ class GoalTemplateCard extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.delete),
-            onPressed: () {
-              context
-                  .read<GoalTemplatesCubit>()
-                  .removeGoalTemplate(goalTemplate, context);
+            onPressed: () async {
+              try {
+                if (goalTemplate.goalId == null) {
+                  throw Exception('Cannot delete template: Invalid template ID');
+                }
+                await context
+                    .read<GoalTemplatesCubit>()
+                    .removeGoalTemplate(goalTemplate, context);
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        e.toString().contains('Invalid template ID')
+                          ? 'Cannot delete template: Invalid template ID'
+                          : 'Failed to delete goal template. Please try again.',
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              }
             },
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),

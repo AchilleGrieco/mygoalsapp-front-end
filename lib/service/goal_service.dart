@@ -9,30 +9,28 @@ import 'package:my_goals/cubit/user_cubit.dart';
 import 'package:my_goals/model/goal.dart';
 
 class GoalService {
-  late Map<String, Object> queryParams;
 
-  Future<List<Goal>> getGoals(BuildContext context) async {
-    String token = context.read<UserCubit>().state!.token;
-    Uri url = Uri.http(Config.apiUrl, "/getGoals");
-    final header = {"authentication": token};
+  static Future<List<Goal>> getGoals(String token) async {
+    Uri url = Uri.http(Config.apiUrl, "/goals");
+    final header = {"Authorization": "Bearer $token"};
     final response = await http.get(url, headers: header);
     if (response.statusCode != 200) {
-      throw Exception();
+      throw Exception("Failed to fetch goals: Status ${response.statusCode}, Body: ${response.body}");
     }
     final data = jsonDecode(response.body);
     List<Goal> goals = List.generate(data.length, (index) {
       return Goal(
-          goalId: data[index].goalId,
-          name: data[index].name,
-          icon: data[index].icon,
-          frequency: data[index].frequency);
+          goalId: data[index]["goalId"],
+          name: data[index]["name"],
+          icon: data[index]["icon"],
+          frequency: data[index]["frequency"]);
     });
     return goals;
   }
 
   Future<Goal> addGoal(Goal goal, BuildContext context) async {
     String token = context.read<UserCubit>().state!.token;
-    Uri url = Uri.http(Config.apiUrl, "/addGoal");
+    Uri url = Uri.http(Config.apiUrl, "/goals");
     final body = {
       "name": goal.name,
       "icon": goal.icon,
@@ -40,7 +38,7 @@ class GoalService {
     };
     final header = {
       "Content-Type": "application/json",
-      "authentication": token
+      "Authorization": "Bearer $token"
     };
     final response =
         await http.post(url, headers: header, body: jsonEncode(body));
@@ -49,17 +47,16 @@ class GoalService {
     }
     final data = jsonDecode(response.body);
     return Goal(
-        goalId: data.goalId,
-        name: data.name,
-        icon: data.icon,
-        frequency: data.frequency);
+        goalId: data["goalId"],
+        name: data["name"],
+        icon: data["icon"],
+        frequency: data["frequency"]);
   }
 
-  void removeGoal(Long goalId, BuildContext context) async {
+  Future<void> removeGoal(int goalId, BuildContext context) async {
     String token = context.read<UserCubit>().state!.token;
-    queryParams["param1"] = goalId;
-    Uri url = Uri.http(Config.apiUrl, "/removeGoal", queryParams);
-    final header = {"authentication": token};
+    Uri url = Uri.http(Config.apiUrl, "/goals/$goalId");
+    final header = {"Authorization": "Bearer $token"};
     final response = await http.delete(url, headers: header);
     if (response.statusCode != 204) {
       throw Exception();
@@ -68,7 +65,7 @@ class GoalService {
 
   Future<Goal> modifyGoal(Goal goal, BuildContext context) async {
     String token = context.read<UserCubit>().state!.token;
-    Uri url = Uri.http(Config.apiUrl, "/modifyGoal");
+    Uri url = Uri.http(Config.apiUrl, "/goals/${goal.goalId}");
     final body = {
       "goalId": goal.goalId,
       "name": goal.name,
@@ -77,17 +74,17 @@ class GoalService {
     };
     final header = {
       "Content-Type": "application/json",
-      "authentication": token
+      "Authorization": "Bearer $token"
     };
-    final response = await http.put(url, headers: header, body: body);
+    final response = await http.put(url, headers: header, body: jsonEncode(body));
     if (response.statusCode != 200) {
       throw Exception();
     }
     final data = jsonDecode(response.body);
     return Goal(
-        goalId: data.goalId,
-        name: data.name,
-        icon: data.icon,
-        frequency: data.frequency);
+        goalId: data["goalId"],
+        name: data["name"],
+        icon: data["icon"],
+        frequency: data["frequency"]);
   }
 }

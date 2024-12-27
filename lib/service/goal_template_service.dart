@@ -45,7 +45,7 @@ class GoalTemplateService {
     return GoalTemplate(goalId: data["goalId"], name: data["name"], icon: data["icon"]);
   }
 
-  void removeGoalTemplate(int? goalId, BuildContext context) async {
+  Future<void> removeGoalTemplate(int goalId, BuildContext context) async {
     String token = context.read<UserCubit>().state!.token;
     Uri url = Uri.http(Config.apiUrl, "/goalTemplates/$goalId");
     final header = {
@@ -54,7 +54,6 @@ class GoalTemplateService {
     };
     var response = await http.delete(url, headers: header);
     if (response.statusCode != 204) {
-      print(response.statusCode);
       throw Exception();
     }
   }

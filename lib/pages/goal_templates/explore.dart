@@ -32,7 +32,6 @@ class _ExploreState extends State<Explore> {
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(child: SizedBox()),
                   Text(
                     "Explore",
                     textAlign: TextAlign.center,
@@ -41,22 +40,12 @@ class _ExploreState extends State<Explore> {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Icon(
-                        Icons.more_horiz,
-                        size: 32,
-                        color: Color.fromARGB(255, 54, 50, 50),
-                      ),
-                    ),
-                  )
                 ],
               ),
               BlocBuilder<GoalTemplatesCubit, List<GoalTemplate>>(
                 builder: (context, state) {
                   return Column(
-                    children: List.generate(context.watch<GoalTemplatesCubit>().state.length, (index) {
+                    children: List.generate(context.read<GoalTemplatesCubit>().state.length, (index) {
                       return GoalTemplateCard(
                         goalTemplate: context.read<GoalTemplatesCubit>().state[index],
                       );
@@ -75,8 +64,7 @@ class _ExploreState extends State<Explore> {
           onPressed: () {
             showCupertinoModalBottomSheet(
                 context: context,
-                builder: (context) => BlocProvider(
-                  create: (context) => SelectedIconCubit(), child: const GoalTemplateBottomSheet(method: "add",)));
+                builder: (context) => const GoalTemplateBottomSheet(method: "add",));
           },
         ),
       ),
