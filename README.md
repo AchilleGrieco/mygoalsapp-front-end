@@ -1,6 +1,6 @@
 # MyGoals App - Flutter Frontend
 
-This is the frontend part of a productivity app that allows users to create and manage their goals using customizable templates. This Flutter application works in conjunction with the [backend Spring application](link-to-backend-repo).
+This is the frontend part of a productivity app that allows users to create and manage their goals using customizable templates. This Flutter application works in conjunction with the [backend Spring application](https://github.com/AchilleGrieco/mygoalsapp).
 
 ## Built With
 - Flutter
@@ -19,7 +19,7 @@ This is the frontend part of a productivity app that allows users to create and 
 ### Prerequisites
 - Flutter SDK
 - An IDE (VS Code, Android Studio, etc.)
-- The backend server running ([see backend repository](link-to-backend-repo))
+- The backend server running ([see backend repository](https://github.com/AchilleGrieco/mygoalsapp))
 
 ### Installation
 
@@ -54,4 +54,4 @@ flutter run
 Feel free to fork the project and submit pull requests.
 
 ## Related
-- [Backend Repository](link-to-backend-repo) - The Spring backend for this application
+- [Backend Repository](https://github.com/AchilleGrieco/mygoalsapp) - The Spring backend for this application
