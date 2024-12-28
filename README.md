@@ -1,4 +1,4 @@
-# My Goals - Flutter Frontend
+# MyGoals App - Flutter Frontend
 
 This is the frontend part of a productivity app that allows users to create and manage their goals using customizable templates. This Flutter application works in conjunction with the [backend Spring application](link-to-backend-repo).
 
