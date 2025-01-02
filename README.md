@@ -25,7 +25,7 @@ This is the frontend part of a productivity app that allows users to create and 
 
 1. Clone the repository
 ```bash
-git clone [your-repository-url]
+git clone [https://github.com/AchilleGrieco/mygoalsapp-front-end.git]
 ```
 
 2. Install dependencies

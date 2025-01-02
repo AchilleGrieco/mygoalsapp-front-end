@@ -1,10 +1,7 @@
-import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_goals/cubit/selected_icon_cubit.dart';
-import 'package:my_goals/model/goal.dart';
 import 'package:my_goals/model/goal_template.dart';
 
 class IconsDropDown extends StatefulWidget {

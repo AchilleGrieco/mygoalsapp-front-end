@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_goals/cubit/goal_templates_cubit.dart';
 import 'package:my_goals/cubit/goals_cubit.dart';
 import 'package:my_goals/cubit/selected_goal_template_cubit.dart';
-import 'package:my_goals/cubit/selected_icon_cubit.dart';
 import 'package:my_goals/model/goal.dart';
 import 'package:my_goals/model/goal_template.dart';
 import 'package:my_goals/page/goal_templates/goal_templates_dropdown.dart';
